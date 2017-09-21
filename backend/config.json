@@ -1,4 +1,4 @@
 {
 	"port": 8000,
-	"article_directory": "./articles/"
+	"article_directory": "./articles/pdf"
 }

@@ -12,15 +12,15 @@ app.get('/', (req, res) => {
 		}).catch(console.log)
 })
 
-app.get('/article', (req, res) => {
-	var filename = req.query.file
+app.get('/article/:filename', (req, res) => {
+	var filename = req.params.filename
 
-	res.setHeader('Content-Type', 'text/html')
+	res.setHeader('Content-Type', 'application/pdf')
 	article.getArticle(filename, config.article_directory)
 		.then(content => {
 			res.send(content)
 		})
-		.catch(console.log)
+		.catch(err => console.log("error: " + err))
 })
 
 const startServer = () => {
