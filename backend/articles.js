@@ -1,6 +1,25 @@
 var fs = require('fs')
 var path = require('path')
+var config = require('./config.json')
 
+const sql = require('sqlite3')
+
+const Sequelize = require('sequelize')
+const sequelize = new Sequelize('articles', 'username', 'password', {
+	host: 'localhost',
+	dialect: 'sqlite',
+	storage: config.article_database
+})
+
+const Article = sequelize.define('article', {
+	name: Sequelize.STRING,
+	filename: Sequelize.STRING,
+	description: Sequelize.STRING,
+	date: Sequelize.DATE
+})
+
+
+// return a promise with a list of all the PDF files in the directory
 function getArticleList(directory) {
 	return new Promise((resolve, reject) => {
 		fs.readdir(directory, (err, items) => {

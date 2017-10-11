@@ -1,7 +1,16 @@
-var express = require('express')
-var app = express()
-var config = require('./config.json')
-var article = require('./articles.js')
+const express = require('express')
+const app = express()
+const config = require('./config.json')
+const article = require('./articles.js')
+const multer = require('multer')
+const cors = require('cors')
+const util = require('util')
+
+app.use(cors())
+
+app.use(multer({
+	dest: './articles'
+}).single('article'))
 
 app.get('/', (req, res) => {
 	console.log(config.article_directory)
@@ -10,6 +19,23 @@ app.get('/', (req, res) => {
 		.then(articles => {
 			res.send(JSON.stringify(articles))
 		}).catch(console.log)
+})
+
+app.post('/upload', (req, res, next) => {
+	console.log("Upload request")
+	if (req.files) {
+		console.log(util.inspect(req.files))
+		if (req.files.article.size === 0) {
+			return next(new Error("Please select an article"))
+		}
+		fs.exists(req.files.article.path, (exists) => {
+			if (exists) {
+				res.end("Successfully uploaded")
+			} else {
+				res.end("Upload failed. Please try again")
+			}
+		})
+	}
 })
 
 app.get('/article/:filename', (req, res) => {
