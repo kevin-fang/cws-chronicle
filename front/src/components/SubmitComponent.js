@@ -51,7 +51,7 @@ export default class SubmitComponent extends React.Component {
 	}
 
 	getArticle = () => (
-		<div className="file has-name is-fullwidth">
+		<div className="file has-name is-fullwidth is-primary">
   			<label className="file-label">
     			<input className="file-input" accept='.pdf' type="file" id="article" name="files[]" onChange={this.handleFileSelect}/>
     				<span className="file-cta">
