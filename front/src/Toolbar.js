@@ -5,21 +5,25 @@ import 'bulma/css/bulma.css'
 export default class Toolbar extends React.Component {
     render() {
         return (
-            <section class='hero is-primary is-small'>
-                <div class='hero-head'>
-                    <div class="nav-right nav-menu">
-                        <a class='nav-item' href='/login'>
+            <section className='hero is-primary is-small'>
+                <div className='hero-head'>
+                    <div className="nav-right nav-menu">
+                        <a className='nav-item' href='/login'>
                             Login
+                        </a>
+                        <a className='nav-item' href='/submit'>
+                            Submit
                         </a>
                     </div>
                 </div>
-                <div class='hero-body'>
-                    <h1 class='title'>
+                <div className='hero-body'>
+                    <h1 className='title'>
                         Commonwealth Chronicle
                     </h1>
-                    <h2 class='subtitle'>
+                    <h2 className='subtitle'>
                         School Newspaper
                     </h2>
+
                 </div>
             </section>
         )

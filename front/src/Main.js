@@ -1,7 +1,8 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import ArticleComponent from './ArticleComponent.js'
-import LoginComponent from './LoginComponent.js'
+import ArticleComponent from './components/ArticleComponent.js'
+import LoginComponent from './components/LoginComponent.js'
+import SubmitComponent from './components/SubmitComponent.js'
 
 export default class Main extends React.Component {
 
@@ -11,6 +12,7 @@ export default class Main extends React.Component {
 			<Switch>
 				<Route exact path='/' component={ArticleComponent} />
 				<Route path='/login' component={LoginComponent}/>
+				<Route path='/submit' component={SubmitComponent}/>
 			</Switch>
 		</main>
 	)
