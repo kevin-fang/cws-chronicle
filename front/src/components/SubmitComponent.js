@@ -1,11 +1,18 @@
 import React from 'react'
+import Axios from 'axios'
+
+var config = require('../config.json')
 
 export default class SubmitComponent extends React.Component {
 
 	constructor(props) {
 		super(props)
 		this.state = {
-			file: null
+			file: null,
+			articleDetails: {
+				name: "",
+				description: ""
+			}
 		}
 	}
 
@@ -17,37 +24,81 @@ export default class SubmitComponent extends React.Component {
 		date: Date
 	*/
 
+	handleArticleName = (event) => {
+		let articleDetails = this.state.articleDetails
+		articleDetails.name = event.target.value
+		this.setState({ articleDetails })
+	} 
 
 
 	getArticleName = () => (
 		<div className="field">
 	  		<label className="label">Article Name</label>
 	  		<div className="control">
-	   			 <input className="input" type="text" placeholder="Name"/>
+	   			 <input 
+	   			 	value={this.state.articleDetails.name}
+	   			 	onChange={this.handleArticleName}
+	   			 	className="input" 
+	   			 	type="text" 
+	   			 	placeholder="Name"/>
 			</div>
 		</div>
 	)
+
+	handleArticleDescription = (event) => {
+		let articleDetails = this.state.articleDetails
+		articleDetails.description = event.target.value
+		this.setState({ articleDetails })
+	}
 
 	getArticleDescription = () => (
 		<div className="field">
   			<label className="label">Description</label>
   			<div className="control">
-    			<textarea className="textarea" placeholder="A brief description of the article"></textarea>
+    			<textarea 
+    				value={this.state.articleDetails.description}
+    				onChange={this.handleArticleDescription}
+    				className="textarea" 
+    				placeholder="A brief description of the article"></textarea>
   			</div>
 		</div>
 	)
 
+	submit = () => {
+		console.log(this.state)
+		let article = new FormData()
+		article.append("article", this.state.file)
+		article.append("name", this.state.articleDetails.name)
+		article.append("description", this.state.articleDetails.description)
+		Axios.post(`${config.server}/upload`, article, {
+			headers: {
+				'Content-Type': 'multipart/form-data'
+			}
+		})
+			.then(response => {
+				console.log(response)
+				alert("Successfully uploaded article.")
+			}).catch(err => {
+				console.error(err)
+				alert("Failed to upload article")
+			})
+	}
+
 	getSubmitButton = () => (
 		<div className="field">
-	  		<div className="control">
-	    		<button className="button">Submit</button>
+	  		<div className="">
+	    		<button className="button" onClick={this.submit}>Submit</button>
 			</div>
 		</div>
 	)
 
 	handleFileSelect = (event) => {
-		var article = event.target.files[0]
-		this.setState({file: article})
+		let article = event.target.files[0]
+		let articleDetails = this.state.articleDetails
+		if (articleDetails.name === "") {
+			articleDetails.name = article.name.slice(0, -4)
+		}
+		this.setState({file: article, articleDetails})
 	}
 
 	getArticle = () => (
@@ -62,10 +113,11 @@ export default class SubmitComponent extends React.Component {
       						Choose a file..
       					</span>
     				</span>
-      			{ this.state.file !== null &&
+      			{ this.state.file !== null && this.state.file !== undefined ?
 	      			<span className="file-name">
-	      				{this.state.file.name}
+	      				{this.state.file.name !== null &&this.state.file.name}
 	      			</span>
+	      			: null
       			}
   			</label>
 		</div>
@@ -73,12 +125,12 @@ export default class SubmitComponent extends React.Component {
 
 	render() {
 		return (
-			<form>
+			<div>
 				{this.getArticleName()}
 				{this.getArticleDescription()}
 				{this.getArticle()}<br/>
 				{this.getSubmitButton()}
-			</form>
+			</div>
 		)
 	}
 }
