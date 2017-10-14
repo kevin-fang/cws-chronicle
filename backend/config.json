@@ -1,5 +1,5 @@
 {
 	"port": 8000,
-	"article_directory": "./articles",
-	"article_database": "./articles/database.sqlite"
+	"article_directory": "./uploads",
+	"article_database": "./uploads/database.sqlite"
 }

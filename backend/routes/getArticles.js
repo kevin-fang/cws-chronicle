@@ -1,0 +1,16 @@
+const config = require('../config.json')
+const article = require('../articles.js')
+const util = require('../util.js')
+
+const getArticles = async (req, res) => {
+	res.setHeader('Content-Type', 'text/json')
+	util.log("List of articles requested")
+	try {
+		let articles = await article.getArticleList(config.article_directory)
+		res.send(JSON.stringify(articles))
+	} catch (err) {
+		util.error(err)
+	}
+}
+
+module.exports = getArticles
