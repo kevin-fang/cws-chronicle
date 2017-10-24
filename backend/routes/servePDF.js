@@ -1,4 +1,4 @@
-const article = require('../articles.js')
+const article = require('./articles.js')
 const config = require('../config.json')
 const util = require('../util.js')
 

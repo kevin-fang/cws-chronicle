@@ -74,8 +74,7 @@ export default class SubmitComponent extends React.Component {
 			headers: {
 				'Content-Type': 'multipart/form-data'
 			}
-		})
-			.then(response => {
+		}).then(response => {
 				console.log(response)
 				alert("Successfully uploaded article.")
 			}).catch(err => {

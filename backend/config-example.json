@@ -1,6 +1,0 @@
-{
-	"port": 8000,
-	"article_directory": "./uploads",
-	"article_database": "./uploads/article_db.sqlite",
-	"api_key": "c7d1862f-afdf-4645-bded-0fe36c8f9d11"
-}
